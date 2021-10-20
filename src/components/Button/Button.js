@@ -1,11 +1,11 @@
 import './button.css'
 
-export default function Button({ onClickBtn }) {
+export default function Button({ clickBtn }) {
     return(
         <button
             type="button"
             className="Button"
-            onClick={onClickBtn}>
+            onClick={clickBtn}>
         Load more
         </button>
     )

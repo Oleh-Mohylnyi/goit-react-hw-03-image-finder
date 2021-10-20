@@ -16,7 +16,6 @@ export default function ImageGalleryItem({ image, openModal }) {
                 src={image.webformatURL}
                 alt=""
                 className="ImageGalleryItem-image"
-                // data-action={image.largeImageURL}
             />
         </li>
     )

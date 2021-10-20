@@ -27,7 +27,7 @@ class App extends Component {
     this.setState({searchQuery: inputText, page: 1, images: null})
   }
 
-  onLoadMore = () => {
+  clickLoadMore = () => {
     this.setState(preState => ({page: preState.page + 1}))
   }
 
@@ -41,8 +41,8 @@ class App extends Component {
     this.toggleModal()
     this.setState({largeImageURL})
   }
- 
-  componentDidUpdate(prevProps, prevState) {
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
         
     const { searchQuery, page } = this.state
     const key = '23100345-a1985f2d3b70e4240f74cca05'
@@ -52,7 +52,9 @@ class App extends Component {
 
  
     if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
-      this.setState({ status: 'pending'})
+      if (prevState.page === page) {
+        this.setState({ status: 'pending' })
+      }
       fetch(`https://pixabay.com/api/?q=${searchQuery}&page=${page}&key=${key}&image_type=${imageType}&orientation=${orientation}&per_page=${perPage}`)
         .then(response => {
           if (response.ok) {
@@ -75,10 +77,12 @@ class App extends Component {
         .catch(error => this.setState({status: 'rejected'}))
     }
 
-    window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth',
-    });
+    if (page !== 1) {
+      window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+      })
+    }
   }
     
     writeDownData = (newImages) => {
@@ -123,7 +127,7 @@ class App extends Component {
           <Reject searchQuery={searchQuery}/>}
         
         {this.checkNeedLoadMore() &&
-          < Button onClickBtn={this.onLoadMore} />}
+          < Button clickBtn={this.clickLoadMore} />}
         
         {showModal && <Modal
           closeModal={this.toggleModal}
