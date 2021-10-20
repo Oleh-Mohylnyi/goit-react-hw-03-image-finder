@@ -2,15 +2,10 @@ import './imageGalleryItem.css'
 
 export default function ImageGalleryItem({ image, openModal }) {
     
-    const largeImageURL = image.largeImageURL
-    function clickImage() {
-        openModal(largeImageURL)
-    }
-    
     return (
         <li
             className="ImageGalleryItem"
-            onClick={clickImage}>
+            onClick={() => openModal(image.largeImageURL)}>
                 
             <img
                 src={image.webformatURL}
